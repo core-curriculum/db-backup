@@ -1,7 +1,7 @@
 import { createClient } from 'supabase'
 import { load } from "dotenv";
 
-const { SUPABASE_URL, SUPABASE_KEY } = await load();
+const { SUPABASE_URL, SUPABASE_KEY } = { ...Deno.env.toObject(), ...(await load()) } as Record<string, string>;
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const accumulateCsv = async (step: number, getFn: (start: number, end: number) => Promise<string[]>): Promise<string[]> => {
