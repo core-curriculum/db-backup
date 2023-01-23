@@ -10,8 +10,8 @@ jobs:
     name: Output CSV and push to core-curriculum/db-backup-data
     runs-on: ubuntu-latest
     env:
-      SUPABASE_KEY: ${{secrets.SUPABASE_KEY}}
-      SUPABASE_URL: ${{secrets.SUPABASE_URL}}
+      SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
