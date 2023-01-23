@@ -1,0 +1,53 @@
+name: Output CSV and push to core-curriculum/db-backup-data
+
+on:
+  schedule:
+    - cron: "3 2 * * *"
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Output CSV and push to core-curriculum/db-backup-data
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_KEY: ${{secrets.SUPABASE_KEY}}
+      SUPABASE_URL: ${{secrets.SUPABASE_URL}}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1   
+      - name: Checkout output in data repo
+        uses: actions/checkout@v3
+        with:
+          repository: core-curriculum/db-backup-data
+          ref: ${{env.GIT_BRANCH}}
+          token: ${{ secrets.GH_PAT }}
+          path: output
+          fetch-depth: 1 
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x 
+      - name: Run task
+        run: deno task main
+      - name: Set current datetime as env variable
+        env:
+          TZ: 'Asia/Tokyo' # タイムゾーン指定
+        run: echo "CURRENT_DATETIME=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
+      - name: commit and push
+        run: |
+          cd output
+          git add -N . # 新規ファイルを含める
+          if ! git diff --exit-code --quiet
+          then
+            echo change ditected update reposistory
+            git config user.name github-actions
+            git config user.email github-actions@github.com
+            git add .
+            git commit -m "Updated from db-backup(${{ env.CURRENT_DATETIME }})"
+            git push
+          else
+            echo no change
+          fi
+
