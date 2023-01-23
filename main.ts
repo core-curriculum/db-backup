@@ -1,5 +1,5 @@
 import { createClient } from 'supabase'
-import { config } from "./config.ts";
+import { config } from "./lib/config.ts";
 
 const { SUPABASE_URL, SUPABASE_KEY } = config;
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
