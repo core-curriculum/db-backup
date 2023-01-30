@@ -45,7 +45,7 @@ jobs:
             git config user.name github-actions
             git config user.email github-actions@github.com
             git add .
-            git commit -m "Updated from db-backup(${{ env.CURRENT_DATETIME }})"
+            git commit -m "Updated from db-backup(${{ env.CURRENT_DATETIME }}(JST))"
             git push
           else
             echo no change
