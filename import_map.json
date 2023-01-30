@@ -1,7 +1,7 @@
 {
     "imports": {
         "deno/asserts": "https://deno.land/std@0.65.0/testing/asserts.ts",
-        "supabase": "https://esm.sh/@supabase/supabase-js@2.4.1",
+        "supabase": "https://esm.sh/@supabase/supabase-js@2",
         "dotenv": "https://deno.land/std@0.173.0/dotenv/mod.ts"
     }
 }

@@ -1,6 +1,7 @@
-FROM denoland/deno:debian-1.29.2
+FROM denoland/deno:debian-1.29.4
 
 RUN mkdir -p /home/deno
+RUN apt-get update && apt-get install -y ssh
 
 RUN chown  -hR deno /home/deno
 RUN chmod -R 777 $DENO_DIR
